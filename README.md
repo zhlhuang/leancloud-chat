@@ -1,6 +1,6 @@
 # leancloud
 
-> 一个基于 leancloud 聊天是
+> 一个基于 leancloud 聊天室
 
 ## Build Setup
 
