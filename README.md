@@ -1,6 +1,6 @@
 # leancloud
 
-> A Vue.js project
+> 一个基于 leancloud 聊天是
 
 ## Build Setup
 
@@ -19,21 +19,21 @@ npm run build
 
 引用js
 
-```
+```html 
 <script src=./static/js/realtime.browser.js></script>
-<script type=text/javascript src=/static/js/manifest.js></script>
-<script type=text/javascript src=/static/js/vendor.js></script>
-<script type=text/javascript src=/static/js/app.js></script>
 ```
 
 引用css 主要依赖了 weui
 
-```
+```html 
   <link href=./static/css/weui.min.css rel=stylesheet>
-  <link href=./static/css/style.css rel=stylesheet>
 ```
 
-```
+html
+```html
+<!-- 引入 vue-leancloud.js -->
+<script src=./vue-leancloud.js></script>
+
   <!--
     imgs  用户头像显示 {'用户idclient' :'头像url' }
     appid leancloud appid
@@ -41,10 +41,26 @@ npm run build
     conversation leancloud 会话id
   -->
 <div id=leancloud>
-    <index :imgs="{'oH5YI0bHn9u4i0ZGYpeNEKXNyrKU':'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83epX1gYw1MfD4ImvORhkAiaqvzrWTJkc5sykm22oEajcia73LWpgZNTEmJAwqqNSXJHMKgIf0FRvLmfg/0'}"
-           :appid="'hcxb7Yo8Q6QM35OdyokwEtcq-gzGzoHsz'" :client="'oH5YI0XfttbEfZ8644zm9CdfJcmw'"
-           :conversation="'590e76e28d6d81005824cd18'"></index>
+    <Leancloud
+            :imgs="imgs"
+            :appid="appid" :client="client"
+            :conversation="conversation">
+    </Leancloud>
 </div>
+
+<script>
+    new Vue({
+        el: "#leancloud",
+        data: {
+            imgs: {'{client_id}': 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83epX1gYw1MfD4ImvORhkAiaqvzrWTJkc5sykm22oEajcia73LWpgZNTEmJAwqqNSXJHMKgIf0FRvLmfg/0'},
+            appid: '{leancloud appid}',
+            client: '{client_id}',
+            conversation: '{conversation_id}'
+        },
+        mounted: function () {
+        }
+    })
+</script>
 ```
 
 
