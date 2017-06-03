@@ -5,7 +5,7 @@
                 <a @click="moreBtn" style="background: #aaaaaa;color: #fff;padding: 2px 11px;">查看更多</a>
             </div>
             <window :imgs="imgs" :msg="msg_list" :client="client" :conversation="conversation"></window>
-            <console v-on:send="sendTextMsg"></console>
+            <console v-on:send="sendTextMsg" v-on:sendImg="sendImgMsg"></console>
         </div>
     </div>
 </template>
@@ -15,7 +15,7 @@ import Window from './Window.vue'
     var conversation=null;
     var Iterator=null
     export default{
-      props: ['client','conversation','appid','imgs'],
+      props: ['client','conversation','appid','appkey','imgs'],
        name:'Leancloud',
         data(){
             return{
@@ -37,6 +37,21 @@ import Window from './Window.vue'
                         window.scrollTo(0,document.body.scrollHeight-h)
                     },100)
                 })
+            },
+            sendImgMsg(param){
+                var that = this
+                conversation.send(param).then(msg=>{
+                    console.log(msg)
+                    if(!msg.content){
+                        msg.content={
+                            _lctype:msg.type,
+                            _lctext:msg._lctext,
+                            _lcfile:msg._lcfile,
+                            _lcattrs:msg._lcattrs
+                        }
+                    }
+                    that.updateMsgList(msg)
+                });
             },
             sendTextMsg(param){
                 console.log(param)
@@ -78,10 +93,15 @@ import Window from './Window.vue'
         },
         mounted(){
             var that = this
+             AV.init({
+                 appId: that.appid,
+                 appKey:that.appkey,
+             });
             var Realtime = AV.Realtime;
                 var realtime = new Realtime({
                   appId: that.appid,
                   region: 'cn',
+                  plugins: [AV.TypedMessagesPlugin], // 注册富媒体消息插件
                 });
                 realtime.createIMClient(that.client).then((client)=>{
                     //获取聊天会话
@@ -109,6 +129,5 @@ import Window from './Window.vue'
             'window':Window
         }
     }
-
 
 </script>
