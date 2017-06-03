@@ -16,6 +16,7 @@ import Window from './Window.vue'
     var Iterator=null
     export default{
       props: ['client','conversation','appid','imgs'],
+       name:'Leancloud',
         data(){
             return{
                 msg_list:[],
@@ -108,4 +109,6 @@ import Window from './Window.vue'
             'window':Window
         }
     }
+
+
 </script>
